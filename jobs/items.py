@@ -17,3 +17,4 @@ class JobsItem(scrapy.Item):
     edu = scrapy.Field()
     work_year = scrapy.Field()
     age  =scrapy.Field()
+    company_location = scrapy.Field()

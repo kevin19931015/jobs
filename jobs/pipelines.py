@@ -13,5 +13,5 @@ class JobsPipeline(object):
         sys.setdefaultencoding('utf8')
         fname = '/soft/ScrapyProjects/jobs/data/job_detail.txt'
         outfile = open(fname, 'a')
-        outfile.write(item['job_name'] + ',' + item['company'] + ',' + item['salary'] + ',' + item['work_year'] + ',' + item['edu'] + ',' + item['age'] + '\n')
+        outfile.write(item['job_name'] + ',' + item['company'] + ',' + item['company_location'] + ',' + item['salary'] + ',' + item['work_year'] + ',' + item['edu'] + ',' + item['age'] + '\n')
         return item

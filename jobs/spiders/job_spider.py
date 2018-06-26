@@ -19,6 +19,7 @@ class JobSpider(scrapy.Spider):
         job_name = html.xpath('//div[@class="title-info"]/h1/text()').extract()[0].encode('utf8')
         salary = html.xpath('//div[@class="job-title-left"]/p[@class="job-item-title"]/text()').extract()[0].encode('utf8').strip()
         company = html.xpath('//div[@class="title-info"]/h3/a/text()').extract()[0].encode('utf8')
+        company_location = html.xpath('//div[@class="job-title-left"]/p[@class="basic-infor"]/span/a/text()').extract()[0].encode('utf8')
         desc = html.xpath('//div[@class="job-qualifications"]/span/text()').extract()
         edu = desc[0]
         work_year = desc[1]
@@ -30,4 +31,5 @@ class JobSpider(scrapy.Spider):
         data['edu'] = edu
         data['work_year'] = work_year
         data['age'] = age
+        data['company_location'] = company_location
         return data
