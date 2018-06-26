@@ -4,16 +4,9 @@ import scrapy
 class LinkSpider(scrapy.Spider):
     name = "link"
     allowed_domains = ["www.liepin.com"]
-    model_url = 'https://www.liepin.com/zhaopin/?curPage='
+    model_url = 'https://www.liepin.com'
     start_urls = ['https://www.liepin.com/zhaopin/']
 
-    # def __init__(self):
-    #     for num in range(0, 100):
-    #         if num>0:
-    #             d_curPage = num -1
-    #             self.start_urls.append(self.model_url + str(num)+'&d_curPage='+str(d_curPage))
-    #         else:
-    #             self.start_urls.append(self.model_url + str(num))
     def parse(self, response):
         html = scrapy.Selector(response)
         links = html.xpath('//div[@class="job-info"]/h3/a/@href').extract()
@@ -23,3 +16,9 @@ class LinkSpider(scrapy.Spider):
                 alllink = alllink+link+"\n"
         open("/soft/ScrapyProjects/jobs/data/job_links.txt",'a').write(alllink)
 
+        page_urls = html.xpath('//div[@class="pagerbar"]/a/@href').extract()
+
+        next_url = self.model_url+page_urls[7]
+
+        print "*****************"+next_url+"********************"
+        yield scrapy.Request(next_url, callback=self.parse)
