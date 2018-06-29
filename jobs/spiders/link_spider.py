@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import scrapy
 
 
@@ -12,13 +13,13 @@ class LinkSpider(scrapy.Spider):
         links = html.xpath('//div[@class="job-info"]/h3/a/@href').extract()
         alllink = ''
         for link in links:
-            if len(link)>0:
-                alllink = alllink+link+"\n"
-        open("/soft/ScrapyProjects/jobs/data/job_links.txt",'a').write(alllink)
+            if link.startswith("https"):
+                alllink = alllink + link + "\n"
+        open("/home/kevin/PycharmProjects/jobs/data/job_links.txt", 'a').write(alllink)
 
         page_urls = html.xpath('//div[@class="pagerbar"]/a/@href').extract()
 
-        next_url = self.model_url+page_urls[7]
+        next_url = self.model_url + page_urls[7]
 
-        print "*****************"+next_url+"********************"
+        print "*****************" + next_url + "********************"
         yield scrapy.Request(next_url, callback=self.parse)
