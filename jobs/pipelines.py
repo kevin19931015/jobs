@@ -13,6 +13,8 @@ class JobsPipeline(object):
         reload(sys)
         sys.setdefaultencoding('utf8')
         fname = '/home/kevin/projects/jobs/data/job_detail.txt'
+        print '---------'
+        print item
         str = json.dumps(dict(item), ensure_ascii=False) + "\n";
         #data = unicode.encode(str, 'utf-8');
         outfile = open(fname, 'a')
