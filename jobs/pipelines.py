@@ -5,13 +5,16 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 import sys
+import json
 
 
 class JobsPipeline(object):
     def process_item(self, item, spider):
         reload(sys)
         sys.setdefaultencoding('utf8')
-        fname = '/home/kevin/PycharmProjects/jobs/data/job_detail.txt'
+        fname = '/home/kevin/projects/jobs/data/job_detail.txt'
+        str = json.dumps(dict(item), ensure_ascii=False) + "\n";
+        #data = unicode.encode(str, 'utf-8');
         outfile = open(fname, 'a')
-        outfile.write(item['job_name'] + ',' + item['company'] + ',' + item['company_location'] + ',' + item['salary'] + ',' + item['work_year'] + ',' + item['edu'] + '\n')
+        outfile.write(str)
         return item
