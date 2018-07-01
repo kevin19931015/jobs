@@ -12,11 +12,14 @@ class JobsPipeline(object):
     def process_item(self, item, spider):
         reload(sys)
         sys.setdefaultencoding('utf8')
-        fname = '/home/kevin/projects/jobs/data/job_detail.txt'
-        print '---------'
-        print item
-        str = json.dumps(dict(item), ensure_ascii=False) + "\n";
-        #data = unicode.encode(str, 'utf-8');
+        fname = '/home/kevin/PycharmProjects/jobs/data/job_detail.txt'
+        # str = json.dumps(dict(item), ensure_ascii=False) + "\n";
+        # data = unicode.encode(str, 'utf-8');
         outfile = open(fname, 'a')
+        outfile.write(item['web_id'] + ',' + item['web_type'] + ',' + item['job_url'] + ',' + item['job_name'] + ',' +
+                      item['job_location'] + ',' + item['edu'] + ',' + item['gender'] + ',' +
+                      item['language'] + ',' + item['major'] + ',' + item['work_year'] + ',' + item['salary'] + ',' +
+                      item['job_date'] + ',' + item['company_name'] + ',' + '\n')
+
         outfile.write(str)
         return item

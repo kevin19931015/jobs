@@ -15,11 +15,10 @@ class LinkSpider(scrapy.Spider):
         for link in links:
             if link.startswith("https"):
                 alllink = alllink + link + "\n"
-        open("/home/kevin/projects/jobs/data/job_links.txt", 'a').write(alllink)
+        open("/home/kevin/PycharmProjects/jobs/data/job_links.txt", 'a').write(alllink)
 
         page_urls = html.xpath('//div[@class="pagerbar"]/a/@href').extract()
 
         next_url = self.model_url + page_urls[7]
 
-        print "*****************" + next_url + "********************"
         yield scrapy.Request(next_url, callback=self.parse)

@@ -9,7 +9,7 @@ class JobSpider(scrapy.Spider):
     start_urls = []
 
     def __init__(self):
-        link_file = open('/home/kevin/projects/jobs/data/job_links.txt', 'r')
+        link_file = open('/home/kevin/PycharmProjects/jobs/data/job_links.txt', 'r')
         for each_link in link_file:
             each_link = each_link.replace('\r', '')
             each_link = each_link.replace('\n', '')
@@ -56,35 +56,6 @@ class JobSpider(scrapy.Spider):
         data['job_date'] = job_date
         data['company_name'] = company_name
 
-        yield scrapy.Request(company_url, meta={'data': data}, callback=self.company_parse)
-
-
-    def company_parse(self, response):
-        html = scrapy.Selector(response)
-        company_desc_arr = html.xpath('//p[@class="profile"]/text()').extract()
-        company_desc= ''
-        for str in company_desc_arr:
-            company_desc = company_desc + str.encode('utf8') + '\n'
-        company_desc = company_desc.strip()
-        company_info = html.xpath('//ul[@class="new-compintro"]/li').extract()
-        for info in company_info:
-            htm = scrapy.http.HtmlResponse(url="my HTML string", body=info.encode('utf8').strip())
-            title_info = htm.xpath('//span/text()').extract()[0].encode('utf8').strip()
-            print info.encode('utf8').strip()
-            print title_info
-            if title_info.startswith('公司地址'):
-                company_address = htm.xpath('//li/text()').extract()[0].encode('utf8').strip()
-
-            if title_info.startswith('公司规模'):
-                company_scale = htm.xpath('//li/text()').extract()[0].encode('utf8').strip()
-        company_worktype = html.xpath('//ul[@class="new-compintro"]/li/a/text()').extract()[0].encode('utf8').strip()
-        company_prop = '不详'
-        company_website = '不详'
-        data = response.meta['data']
-        data['company_desc'] = company_desc
-        data['company_address'] = company_address
-        data['company_worktype'] = company_worktype
-        data['company_scale'] = company_scale
-        data['company_prop'] = company_prop
-        data['company_website'] = company_website
         return data
+
+
