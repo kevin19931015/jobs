@@ -31,3 +31,4 @@ class JobsItem(scrapy.Item):
     company_scale = scrapy.Field()
     company_prop = scrapy.Field()
     company_website = scrapy.Field()
+    curl_timestamp = scrapy.Field()

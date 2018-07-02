@@ -1,0 +1,1 @@
+LOAD DATA LOCAL INPATH '/home/kevin/projects/jobs/data/job_detail.txt' OVERWRITE INTO TABLE stg_job PARTITION (pt='20150702');

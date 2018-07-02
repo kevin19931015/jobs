@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-  
 import scrapy
 from jobs import items
+import time
 
 class JobSpider(scrapy.Spider):
 
@@ -9,7 +10,7 @@ class JobSpider(scrapy.Spider):
     start_urls = []
 
     def __init__(self):
-        link_file = open('/home/kevin/PycharmProjects/jobs/data/job_links.txt', 'r')
+        link_file = open('/home/kevin/projects/jobs/data/job_links.txt', 'r')
         for each_link in link_file:
             each_link = each_link.replace('\r', '')
             each_link = each_link.replace('\n', '')
@@ -25,15 +26,15 @@ class JobSpider(scrapy.Spider):
             company_url = html.xpath('//div[@class="title-info"]/h3/a/@href').extract()[0].encode('utf8').strip()
             job_location = html.xpath('//div[@class="job-title-left"]/p[@class="basic-infor"]/span/a/text()').extract()
             if len(job_location)>0:
-                job_location = job_location[0].encode('utf8')
+                job_location = job_location[0].encode('utf8').strip()
             else:
-                job_location = html.xpath('//div[@class="job-title-left"]/p[@class="basic-infor"]/span/text()').extract()[0].encode('utf8')
+                job_location = html.xpath('//div[@class="job-title-left"]/p[@class="basic-infor"]/span/text()').extract()[1].encode('utf8').strip()
             job_date = html.xpath('//div[@class="job-title-left"]/p[@class="basic-infor"]/time/@title').extract()[0].encode('utf8')
             desc = html.xpath('//div[@class="job-qualifications"]/span/text()').extract()
             job_desc_arr = html.xpath('//div[@class="content content-word"]/text()').extract()
             job_desc = ''
-            for str in job_desc_arr:
-                job_desc = job_desc+str.encode('utf8')+'\n'
+            for desc_str in job_desc_arr:
+                job_desc = job_desc+desc_str.encode('utf8')+'\n'
             job_desc =  job_desc.strip()
             language = desc[2].encode('utf8').strip()
             major = html.xpath('//div[@class="content"]/ul/li/label/text()').extract()[1].encode('utf8').strip()

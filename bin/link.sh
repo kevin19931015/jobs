@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 echo 清空老数据...
-rm /home/kevin/PycharmProjects/jobs/data/job_links.txt
+rm /home/kevin/projects/jobs/data/job_links.txt
 echo 开始收集信息...
-scrapy crawl link &> /home/kevin/PycharmProjects/jobs/logs/link.log
+scrapy crawl link &> /home/kevin/projects/jobs/logs/link.log
 echo 收集结束.

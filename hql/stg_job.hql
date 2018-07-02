@@ -5,24 +5,17 @@ web_type STRING COMMENT 'website type, 01, 02,...',
 job_url STRING COMMENT 'job url',
 job_name STRING COMMENT 'job name',
 job_location STRING COMMENT 'job location',
-job_desc STRING COMMENT 'job desc',
+job_date STRING COMMENT 'job date',
 edu STRING COMMENT 'education',
 gender STRING COMMENT 'gender',
 language STRING COMMENT 'language',
 major STRING COMMENT 'major',
 work_year STRING COMMENT 'work years',
 salary STRING COMMENT 'salary',
-company_name STRING COMMENT 'company name',
-company_desc STRING COMMENT 'company desc',
-company_address STRING COMMENT 'company address',
-company_worktype STRING COMMENT 'company worktype',
-company_scale STRING COMMENT 'company scale',
-company_prop STRING COMMENT 'company property',
-company_website STRING COMMENT 'company website',
-curl_timestamp STRING COMMENT 'curl timestamp') 
+company_name STRING COMMENT 'company name')
 COMMENT 'all flat data from webpage'
 PARTITIONED BY ( `pt` STRING COMMENT 'job post date (format yyyymmdd)' )
 ROW FORMAT DELIMITED
-FIELDS TERMINATED BY '\001'
+FIELDS TERMINATED BY ','
 NULL DEFINED AS ''
 STORED AS TEXTFILE ;
