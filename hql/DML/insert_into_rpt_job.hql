@@ -1,47 +1,41 @@
 INSERT INTO TABLE rpt_job PARTITION (pt)
     SELECT
-    dmj.web_id,
-    dmj.web_type,
-    dmj.job_url,
-    dmj.job_name,
-    dmj.job_location,
-    dim_joblocation.joblocation_type,
-    dmj.edu,
-    '1',
-    dmj.gender,
-    dmj.language,
-    dmj.major,
-    dmj.work_year,
-    '1',
-    dmj.salary,
-    '1',
-    dmj.job_date,
-    dmj.company_name,
-    dmj.vip_flg,
-    dmj.pt
-    FROM dm_job dmj
-    LEFT OUTER JOIN  dim_joblocation
-    ON ( dmj.pt = dim_joblocation.pt
-         and dmj.web_type = dim_joblocation.web_type
-         and dmj.job_name = dim_joblocation.job_name
-         and dmj.company_name = dim_joblocation.company_name
-         and dmj.job_location = dim_joblocation.joblocation_detail)
-    LEFT OUTER JOIN  dim_edu
-    ON ( dmj.pt = dim_edu.pt
-         and dmj.web_type = dim_edu.web_type
-         and dmj.job_name = dim_edu.job_name
-         and dmj.company_name = dim_edu.company_name
-         and dmj.edu = dim_edu.edu_detail     )
-    LEFT OUTER JOIN  dim_workyear
-    ON ( dmj.pt = dim_workyear.pt
-         and dmj.web_type = dim_workyear.web_type
-         and dmj.job_name = dim_workyear.job_name
-         and dmj.company_name = dim_workyear.company_name
-         and dmj.work_year = dim_workyear.workyear_detail     )
-    LEFT OUTER JOIN  dim_salary
-    ON ( dmj.pt = dim_salary.pt
-         and dmj.web_type = dim_salary.web_type
-         and dmj.job_name = dim_salary.job_name
-         and dmj.company_name = dim_salary.company_name
-         and dmj.salary = dim_salary.salary_detail     )
-    where dmj.pt='20180702';
+    web_id,
+    web_type,
+    job_url,
+    job_name,
+    job_location,
+    CASE
+    WHEN (job_location LIKE '%北京%' = TRUE)    THEN 'A1'
+    WHEN (job_location LIKE '%上海%' = TRUE)    THEN 'A2'
+    WHEN (job_location LIKE '%广州%' = TRUE)THEN 'A3'
+    WHEN (job_location LIKE '%深圳%' = TRUE)    THEN 'A4'
+    WHEN (job_location LIKE '%南京%' = TRUE)    THEN 'A5'
+    WHEN (job_location LIKE '%杭州%' = TRUE)    THEN 'A6'
+    ELSE 'A9'
+    END  AS joblocation_type,
+    edu,
+    CASE
+    WHEN (edu LIKE '%大专%' = TRUE OR edu LIKE '%专科%' = TRUE)    THEN 'B1'
+    WHEN (edu LIKE '%本科%' = TRUE)    THEN 'B2'
+    WHEN (edu LIKE '%硕士%' = TRUE OR edu LIKE '%研究生%' = TRUE)    THEN 'B3'
+    ELSE 'B9'
+    END  AS edu_type,
+    gender,
+    language,
+    major,
+    work_year,
+    CASE
+    WHEN (work_year LIKE '%经验不限%' = TRUE OR work_year LIKE '%1年%' = TRUE OR work_year LIKE '%２年%' = TRUE)    THEN 'C1'
+    WHEN (work_year LIKE '%３年%' = TRUE OR work_year LIKE '%４年%' = TRUE OR work_year LIKE '%５年%' = TRUE)    THEN 'C2'
+    WHEN (work_year LIKE '%６年%' = TRUE OR work_year LIKE '%７年%' = TRUE OR work_year LIKE '%８年%' = TRUE)THEN 'C3'
+    ELSE 'C9'
+    END  AS workyear_type,
+    salary,
+    parse_salary(salary) AS salary_type,
+    job_date,
+    company_name,
+    vip_flg,
+    pt
+    FROM dm_job
+    where pt='20180702';
