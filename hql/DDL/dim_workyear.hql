@@ -8,6 +8,6 @@ workyear_type STRING COMMENT 'work year enum type 01,02,03')
 COMMENT 'work years dimision info from s_job' 
 PARTITIONED BY ( `pt` STRING COMMENT 'job post date(format yyyymmdd)' )
 ROW FORMAT DELIMITED
-FIELDS TERMINATED BY '\001'
+FIELDS TERMINATED BY ','
 NULL DEFINED AS ''
 STORED AS SEQUENCEFILE;

@@ -1,0 +1,2 @@
+add jar hdfs://localhost:8020/user/hadoop/salary.jar;
+create temporary function parse_salary as 'salary.ParseSalary';

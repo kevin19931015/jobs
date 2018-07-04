@@ -1,5 +1,7 @@
 INSERT OVERWRITE TABLE  s_job PARTITION (pt)
-SELECT web_id,
+SELECT
+       distinct
+       web_id,
        web_type,
        job_url,
        job_name,
@@ -22,7 +24,8 @@ SELECT web_id,
         WHEN salary IS NULL OR TRIM(salary) = '' THEN "--"
         ELSE salary
     END salary,
+        job_date,
         company_name,
         pt
     FROM   stg_job
-    WHERE   pt = '20150702';
+    WHERE   pt = '20180702';
